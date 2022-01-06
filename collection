@@ -1,0 +1,74 @@
+package com.cf;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+public class ListEg {
+
+	public static void main(String[] args) {
+
+		List l=new ArrayList();
+		l.add(10);
+		l.add(120);
+		l.add(130);
+		l.add(101);
+		l.add(1);
+		l.add(null);
+		l.add(10);
+		l.add(1320);
+		l.add(10);
+		l.add(null);
+		l.add("hi");
+		System.out.println(l);
+		
+		System.out.println(l.get(0));
+		System.out.println(l.get(2));
+		l.remove(4);
+		System.out.println("removing val from 4th index: "+l);
+	//	l.remove(10);//10 is a integer, chnage it into obj and remove tht info
+		//boxing technique
+		l.remove(new Integer(10));
+		System.out.println("after remv 10 "+l);//first occurence will be removed
+		l.add(2, 'c');
+		System.out.println("inserting in index 2 "+l);
+		System.out.println("null present? "+l.contains(null));
+		//l.clear();
+		//l=null;//null pointer excep
+		//empty and null are same or not
+		//System.out.println(l.isEmpty());
+		//System.out.println(l);
+		
+//		for(Object o:l){
+//			System.out.println(o);//cannot do type casting here because we have hetrogenous types
+//			
+//		}
+		
+	/*	for(Object o:l){
+			if(o instanceof Integer)
+				System.out.println(((Integer)o).intValue());//down cast
+			else if(o instanceof String)
+				System.out.println((String)o);
+			else
+				System.out.println((Character)o);
+		}
+		*/
+		
+		//Iterator
+		Iterator i=l.iterator();
+		while(i.hasNext()){
+			System.out.println(i.next());//printed in object format
+		}
+		
+		//when a collection is traversed u cannot modify LIST obj - few are exception
+		//fail fast 
+		//fail safe
+		for(Object o:l){
+			//l.remove(o);
+			//l.add("welcome");//concurrent modification exception
+		}
+		System.out.println(l);
+		
+	}
+
+}

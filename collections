@@ -1,0 +1,84 @@
+Vector:
+
+	same as LinkedList, all the methods are synchronized
+
+task:
+======
+Check if ArrayList synchronized by default?
+	
+	how to make it synchronized...
+
+Queue:
+
+Deque:
+
+
+
+
+Comparable interface is mainly used to sort the arrays (or lists) of custom objects.
+
+Lists (and arrays) of objects
+
+if they implement comparable they are automatically by Collections.sort and Arrays.sort.
+
+
+    int[] arr = {1,5,22,10,9,4,55};
+    Arrays.sort(arr);
+    sysout(arr);//iterate and print
+
+     List fruits = new ArrayList();
+     fruits.add("Orange");
+     fruits.add("Banana");
+     fruits.add("Apple");
+     fruits.add("Guava");
+     fruits.add("Grapes");
+     Collections.sort(fruits);
+	
+
+Sort objects of Emp class?
+
+
+public class Emp implements Comparable<Author> {
+
+ 	 String firstName;
+ 	 int age;
+ 	 int salary;
+	Emp(String first, int age, int age){
+		this.firstName = first;
+		this.age = age;
+		this.salary = sal;
+	  }
+	public int compareTo(Emp e){
+		this.age > e.age ? 1 : this.age < e.age ? -1 : 0;
+	}
+}
+
+
+
+
+Map:
+
+	collection of k-v pair
+	its not a part of collection interface hierarchy
+	Keys are unique
+	values can be duplicated
+	some of them allow null, some do not
+
+
+
+Map - interface
+	
+	Map m=new HashMap();
+
+
+Wrapper classes?  9 wrappers are there
+	8  equiv of basic datatypes
+	Void is also a wrapper
+
+	li.add(90);//Integer object
+
+auto boxing  for primitives
+
+	automatically converts primitives into its equivalent wrapper type
+
+boxing - we write code for converting primitives into its equivalent wrapper type

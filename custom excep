@@ -1,0 +1,43 @@
+import java.io.*;
+class excep2{
+	
+	public static void main(String...aa)//throws IOException//reported to jvm
+	{
+	int amt=200;
+	try{
+	 new excep2().m1(amt);
+	}
+	catch(Exception e)
+	{
+	System.out.println(e.getMessage());
+	}
+	}
+	void m1(int amt)throws MoneyLessException
+	{
+		
+		m2(amt);
+		System.out.println("m1");
+	}
+	void m2(int amt)throws MoneyLessException
+	{
+		m3(amt);
+		System.out.println("m2");
+	}	
+	void m3(int amt) throws MoneyLessException
+	{
+		if(amt<500)
+		{
+		 throw new MoneyLessException("amt cannot be less than 500");
+		}
+		System.out.println("m3");
+	}
+}
+
+class MoneyLessException extends Exception{
+	MoneyLessException(){
+	super();
+	}
+	MoneyLessException(String msg){
+	super(msg);
+	}
+}

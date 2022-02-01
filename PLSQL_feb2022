@@ -1,0 +1,200 @@
+SQL:
+
+structured Query Language:
+
+server	Sql executor engine
+
+PL SQL -> 
+
+block structured language - codes are oraganized in blocks
+
+
+anonymous block : 3 sections
+
+	1. declarartion (mandatory)
+	2. executable (mandatory)
+	3. exception handling (optional)
+
+plsql -> functions/procedures  = block having a name
+
+they get stored in oracle server so that we can reuse it later when ever & whoch ever appln
+
+anonymous block : donot get stored in oracle server as they are used for one time purpose
+
+anonymous block  are mainly used in testing.
+
+declaration
+BEGIN
+	execution section
+	
+   Exeception	
+	exeception section
+
+END;
+
+SET SERVEROUTPUT OFF;
+
+Begin
+  DBMS_OUTPUT.put_line('hi');
+end;
+
+2.
+DECLARE
+	msg varchar2(20) :='hi hello';
+	msg1 varchar2(20) :='welcome';
+Begin
+  DBMS_OUTPUT.put_line(msg);
+  DBMS_OUTPUT.put_line(msg1);
+end;
+
+3. 
+
+DECLARE
+	numb NUMBER :=10;
+	res NUMBER;
+Begin
+	res:=numb/0;
+  DBMS_OUTPUT.put_line(res);
+
+end;
+
+DECLARE
+	numb NUMBER :=10;
+	res NUMBER;
+Begin
+	res:=numb/0;
+        DBMS_OUTPUT.put_line(res);
+   
+        Exception 
+          WHEN ZERO_DIVIDE THEN
+
+            DBMS_OUTPUT.put_line('err occured...dont divide by zero'+SQLERRM);
+
+end;
+
+DECLARE
+	numb NUMBER :=10;
+	res NUMBER;
+Begin
+	res:=numb/0;
+        DBMS_OUTPUT.put_line(res);
+   
+        Exception 
+          WHEN ZERO_DIVIDE THEN
+
+            DBMS_OUTPUT.put_line('err occured...dont divide by zero'|| SQLERRM || ' number u tried dividing is ' ||numb);
+
+end;
+
+
+reference:
+==========
+concat operator:  first_name || 'welcome' || to CF
+Q operator: first_name||q'{ has salary's }'||salary 
+
+Scalar Datatype:
+
+	data type will have its own sub types
+
+PL/SQL DATA types:
+
+NUMBER
+Boolean
+Character
+Datetime
+
+
+
+Numeric Datatype:
+
+real numbers, integers,floating point
+
+NUMBER(2,2) => 23.23
+
+NUMBER,BINARY_FLOAT and BINARY_DOUBLE are sql datatypes
+
+PLS_INTEGER is a datatype which is specific for PLSQL.
+
+-2147....48 to 2147....47
+
+why PLS_INTEGER?
+	it requires less storgae than Number.
+
+NATURAL -> non  neg numb
+NATURALN -> non  neg numb + not null constraint
+POSITIVE ->
+POSITIVEN -> 
+SIGNTYPE -> represents values -> 0,-1,1
+SIMPLE_INTEGER -> normal number with not null constraint
+
+
+Boolean: true or flase or null.
+
+sql doesnt have boolean datatype;
+
+Character:
+
+CHAR, VARCHAR2,LONG,RAW,LONGRAW,UROWID,ROWID,
+
+CHAR - fixed length char type from 1 to 32767 bytes
+
+VARCHAR2 - varrying length char type -> 1 to 32767
+
+DATE TIME:
+
+date , time stamp,time zone,intervals
+
+DATE, TIMESTAMP,TIMESTAMP WITH TIMEZONE,INTERVAL YEAR TO MONTH, INTERVAL DAY TO SECOND
+
+
+COMMENTS:
+
+	/**/ - multiline
+	-- - single line comment
+
+VARIABLE:
+
+	var_name dataype [NOT NULL][:=initial_val];
+
+Ex:
+
+DECLARE
+	a number;
+	b number:=23
+BEGIN
+	NULL;
+END;
+
+identitfy the prob in above block?
+
+semi-colon missed in b declaration
+datatype size 255
+
+find the error in below code:
+
+DECLARE
+	a number not null :=90;
+	b number:=23;
+BEGIN
+--      a:=null;
+
+END;
+
+DECLARE
+	a varchar2(25) not null :='ship';
+	b number:=23;
+BEGIN
+
+   a:='';
+  DBMS_OUTPUT.put_line(a);
+END;
+
+
+
+
+
+
+
+
+
+

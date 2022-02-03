@@ -377,3 +377,197 @@ END IF;
 	DBMS_OUTPUT.put_line('second');
 
 end;
+
+case:
+=====
+CASE selector
+
+WHEN selector_value THEN
+stmt
+WHEN selector_value THEN
+stmt
+WHEN selector_value THEN
+stmt
+:::
+ELSE
+	stnmts
+END CASE;
+
+example:
+DECLARE
+
+grade CHAR(1);
+result varchar2(20);
+
+BEGIN
+grade:='C';
+
+CASE grade
+
+WHEN 'A' THEN 
+ result:='Excellant';
+
+WHEN 'B' THEN 
+ result:='Very Good';
+
+WHEN 'C' THEN 
+ result:='fair';
+
+ELSE
+result :='no such value found';
+END CASE;
+
+DBMS_OUTPUT.PUT_LINE(result);
+END;
+
+looping:
+========
+index: implicit variable 
+has a local scope
+
+FOR index IN lower_bound...upper_bound
+
+LOOP
+
+	stmts
+END LOOP;
+
+
+BEGIN 
+FOR count1 IN 1..10
+LOOP
+ DBMS_OUTPUT.PUT_LINE(count1);
+END LOOP;
+END;
+-- can we use count?
+
+DECLARE 
+lstep PLS_INTEGER:=2;
+
+BEGIN 
+FOR count1 IN 1..10
+LOOP
+ DBMS_OUTPUT.PUT_LINE(lstep||' * '||count1||' = ' || (count1*lstep));
+END LOOP;
+END;
+-- can we use count?
+
+DECLARE 
+lstep PLS_INTEGER:=10;
+
+BEGIN 
+	FOR count1 IN 1..10
+	LOOP
+ 		DBMS_OUTPUT.PUT_LINE(count1));
+	END LOOP;
+DBMS_OUTPUT.PUT_LINE(count1);
+END;
+-- can we use count?
+<<outer>>
+DECLARE 
+lstep PLS_INTEGER:=10;
+count1 number:=20;
+BEGIN 
+	FOR count1 IN 1..lstep
+	LOOP
+ 		DBMS_OUTPUT.PUT_LINE(outer.count1);
+	END LOOP;
+
+DBMS_OUTPUT.PUT_LINE(count1);
+END;
+
+<<outer>>
+DECLARE 
+lstep PLS_INTEGER:=10;
+count1 number:=20;
+BEGIN 
+	FOR count1 IN REVERSE 1..lstep
+	LOOP
+ 		DBMS_OUTPUT.PUT_LINE(count1);
+	END LOOP;
+
+DBMS_OUTPUT.PUT_LINE(count1);
+END;
+
+
+ROWTYPE:
+
+--complete row into plsql
+
+
+DECLARE 
+
+emp_info EMPLOYEES%ROWTYPE;
+
+BEGIN
+select * INTO emp_info
+from employees 
+where employee_id=101;
+
+
+DBMS_OUTPUT.PUT_LINE(emp_info.FIRST_NAME || ' emp id is '|| emp_info.employee_id);
+END;
+
+
+ERROR => not enough values the INTO list...?
+ERROR => too many values the INTO list...?
+ERROR => numeric or value...?
+
+RECORD:
+
+	composite data structure hold different value/datatypes.
+
+3 types:
+
+	1. table based
+	2. cusrsor based
+	3. prgmr defined
+
+Table based record:at runtime
+
+DECLARE
+emp_info EMPLOYEES%ROWTYPE;
+
+cusrsor based record: at runtime
+
+ CURSOR cemp IS 
+ SELECT name,pass from emp;
+
+ r_cur cemp%ROWTYPE;
+
+
+TYPE rec_type is RECORD(
+ var_name DATEType [[NOTNULL]:= | DEFAULT def_val],
+  tdy DATETIME [[NOTNULL]:= | DEFAULT def_val],
+  ....
+);
+
+to assign or use in PLSQL block
+
+record_name rec_type;
+
+
+ex:
+
+DECLARE 
+
+TYPE rec_emp_type IS
+RECORD(
+  emp_name EMPLOYEES.first_name%TYPE,
+  last_name EMPLOYEES.last_name%TYPE);
+
+r_emp rec_emp_type;
+
+BEGIN
+   SELECT first_name, last_name INTO
+    r_emp
+  FROM EMPLOYEES WHERE employee_id=101;
+
+DBMS_OUTPUT.PUT_LINE(r_emp.emp_name);	
+END;
+
+
+
+
+
+

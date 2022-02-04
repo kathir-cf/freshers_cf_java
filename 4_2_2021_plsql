@@ -1,0 +1,775 @@
+SQL:
+
+structured Query Language:
+
+server	Sql executor engine
+
+PL SQL -> 
+
+block structured language - codes are oraganized in blocks
+
+
+anonymous block : 3 sections
+
+	1. declarartion (not always mandatory)
+	2. executable (mandatory)
+	3. exception handling (optional)
+
+plsql -> functions/procedures  = block having a name
+
+they get stored in oracle server so that we can reuse it later when ever & whoch ever appln
+
+anonymous block : donot get stored in oracle server as they are used for one time purpose
+
+anonymous block  are mainly used in testing.
+
+declaration
+BEGIN
+	execution section
+	
+   Exeception	
+	exeception section
+
+END;
+
+SET SERVEROUTPUT OFF;
+
+Begin
+  DBMS_OUTPUT.put_line('hi');
+end;
+
+2.
+DECLARE
+	msg varchar2(20) :='hi hello';
+	msg1 varchar2(20) :='welcome';
+Begin
+  DBMS_OUTPUT.put_line(msg);
+  DBMS_OUTPUT.put_line(msg1);
+end;
+
+3. 
+
+DECLARE
+	numb NUMBER :=10;
+	res NUMBER;
+Begin
+	res:=numb/0;
+  DBMS_OUTPUT.put_line(res);
+
+end;
+
+DECLARE
+	numb NUMBER :=10;
+	res NUMBER;
+Begin
+	res:=numb/0;
+        DBMS_OUTPUT.put_line(res);
+   
+        Exception 
+          WHEN ZERO_DIVIDE THEN
+
+            DBMS_OUTPUT.put_line('err occured...dont divide by zero'+SQLERRM);//err
+
+end;
+
+DECLARE
+	numb NUMBER :=10;
+	res NUMBER;
+Begin
+	res:=numb/0;
+        DBMS_OUTPUT.put_line(res);
+   
+        Exception 
+          WHEN ZERO_DIVIDE THEN
+
+            DBMS_OUTPUT.put_line('err occured...dont divide by zero'|| SQLERRM || ' number u tried dividing is ' ||numb);
+
+end;
+
+
+reference:
+==========
+concat operator:  first_name || 'welcome' || to CF
+Q operator: first_name||q'{ has salary's }'||salary 
+
+Scalar Datatype:
+
+	data type will have its own sub types
+
+PL/SQL DATA types:
+
+NUMBER
+Boolean
+Character
+Datetime
+
+
+
+Numeric Datatype:
+
+real numbers, integers,floating point
+
+NUMBER(2,2) => 23.23
+
+NUMBER,BINARY_FLOAT and BINARY_DOUBLE are sql datatypes
+
+PLS_INTEGER is a datatype which is specific for PLSQL.
+
+-2147....48 to 2147....47
+
+why PLS_INTEGER?
+	it requires less storgae than Number.
+
+NATURAL -> non  neg numb
+NATURALN -> non  neg numb + not null constraint
+POSITIVE ->
+POSITIVEN -> 
+SIGNTYPE -> represents values -> 0,-1,1
+SIMPLE_INTEGER -> normal number with not null constraint
+
+
+Boolean: true or false or null.
+
+sql doesnt have boolean datatype;
+
+Character:
+
+CHAR, VARCHAR2,LONG,RAW,LONGRAW,UROWID,ROWID,
+
+CHAR - fixed length char type from 1 to 32767 bytes
+
+VARCHAR2 - varrying length char type -> 1 to 32767
+
+DATE TIME:
+
+date , time stamp,time zone,intervals
+
+DATE, TIMESTAMP,TIMESTAMP WITH TIMEZONE,INTERVAL YEAR TO MONTH, INTERVAL DAY TO SECOND
+TIMESTAMP WITH LOCAL TIMEZONE
+
+COMMENTS:
+
+	/**/ - multiline
+	-- -> single line comment
+
+VARIABLE:
+
+	var_name dataype [NOT NULL][:=initial_val];
+
+Ex:
+
+DECLARE
+	a number;
+	b number:=23
+BEGIN
+	NULL;
+END;
+
+identitfy the prob in above block?
+
+semi-colon missed in b declaration
+datatype size 255
+
+find the error in below code:
+
+DECLARE
+	a number not null :=90;
+	b number:=23;
+BEGIN
+--      a:=null;
+
+END;
+
+DECLARE
+	a varchar2(25) not null :='ship';
+	b number:=23;
+BEGIN
+
+   a:='';
+  DBMS_OUTPUT.put_line(a);
+END;
+
+
+02-02-2022
+=============
+
+Scope of PS/SQL Variables:
+============================
+* PL/SQL allows the nesting of Blocks within Blocks.
+
+a variable which is accessible to an outer Block is also accessible to all nested 
+inner Blocks. The variables declared in the inner blocks are not accessible to outer
+blocks. 
+
+{
+	n number:=90;
+	b1{
+		n
+		numb1 number:=90;// not accesseble out
+	}
+	b2{
+		n
+	}
+}
+
+types:
+	Local variables
+	Global Variables
+
+Local variables -  These are declared in a inner block and cannot be referenced by 
+		   outside Blocks.
+Global variables - These are declared in a outer block and can be referenced by
+		   its itself and by its inner blocks.
+
+
+DECLARE
+  var_num1 number; 
+  var_num2 number; 
+ BEGIN 
+  var_num1 := 100; 
+  var_num2 := 200; 
+  DECLARE 
+   var_mult number; 
+   BEGIN 
+    var_mult := var_num1 * var_num2; 
+   END; 
+ END; 
+
+
+using duplicate vatiables in inner block
+DECLARE
+  var_num1 number; 
+  var_num2 number; 
+ BEGIN 
+  var_num1 := 100; 
+  var_num2 := 200; 
+  DECLARE 
+  -- var_num1 number:=1000;
+   var_mult number; 
+   BEGIN 
+    var_mult := var_num1 * var_num2; 
+    DBMS_OUTPUT.put_line(var_mult);
+   END; 
+    DBMS_OUTPUT.put_line(var_num1);
+ END; 
+
+ANCHORED DECLARATION:
+============================
+
+DECLARE
+        cust_name Employees.first_name%TYPE;
+        sal Employees.salary%TYPE;
+BEGIN 
+
+	SELECT first_name,salary
+        INTO
+	cust_name,sal
+	FROM EMPLOYEES 
+	WHERE employee_id=102;
+
+	DBMS_OUTPUT.put_line(cust_name||salary is ||sal);
+END;
+	
+declare 2 number var and 1 varchar variables
+
+get the min salary of all emplyees and store in min_salary
+get the total salary of all emplyees and store in tot_salary
+
+get name of the person who gets min salary into another varchar variable
+print them
+
+
+
+set SERVEROUTPUT ON;
+declare 
+emp_name employees.NAME%TYPE;
+min_sal number;
+tot_sal number;
+begin
+select name into emp_name from employees where salary = (select min(salary) from employees);
+select min(salary) into min_sal from employees;
+select sum(salary) into tot_sal from employees;
+dbms_output.put_line(emp_name||'minimum salary is'||min_sal||'total salary is'||tot_sal);
+end;
+
+
+what if 2 ppl have same salary which is m,inimum?
+
+constants:
+	constant_name CONSTANT datatype [NOT NULL]:=value;
+
+DECLARE 
+	pi CONSTANT number:=10;
+BEGIN
+	--pi:=110;
+	DBMS_OUTPUT.put_line(pi);
+END;
+
+
+IF Statements:
+
+	if(true){....}
+	else{...}
+
+Declare sal number:=5000;
+
+BEGIN
+	
+	IF sal>6000 THEN
+	DBMS_OUTPUT.put_line('sal is less');
+	ELSE
+	DBMS_OUTPUT.put_line('sal is greater');
+	END IF;
+END;
+
+Declare 
+
+sal number:=5000;
+
+BEGIN
+        SELECT salary
+        INTO sal
+        FROM Employees
+        where employee_id=:enter_salary; 
+
+	
+	IF sal<6000 THEN
+	DBMS_OUTPUT.put_line('sal is less than 6k');
+	ELSE
+	DBMS_OUTPUT.put_line('sal is greater than 6k');
+	END IF;
+END;
+
+
+CASE: ?
+
+
+GOTO statement:
+
+BEGIN
+
+	GOTO second;
+
+	<<first>>
+	DBMS_OUTPUT.put_line('first');
+	<<second>>
+	DBMS_OUTPUT.put_line('second');
+
+end;
+
+
+2.
+DECLARE 
+
+numb number:=10;
+
+BEGIN
+
+ IF numb>20 THEN
+	GOTO second;
+ELSE
+     GOTO first;
+END IF;
+
+	<<first>>
+	DBMS_OUTPUT.put_line('first');
+	<<second>>
+	DBMS_OUTPUT.put_line('second');
+
+end;
+
+case:
+=====
+CASE selector
+
+WHEN selector_value THEN
+stmt
+WHEN selector_value THEN
+stmt
+WHEN selector_value THEN
+stmt
+:::
+ELSE
+	stnmts
+END CASE;
+
+example:
+DECLARE
+
+grade CHAR(1);
+result varchar2(20);
+
+BEGIN
+grade:='C';
+
+CASE grade
+
+WHEN 'A' THEN 
+ result:='Excellant';
+
+WHEN 'B' THEN 
+ result:='Very Good';
+
+WHEN 'C' THEN 
+ result:='fair';
+
+ELSE
+result :='no such value found';
+END CASE;
+
+DBMS_OUTPUT.PUT_LINE(result);
+END;
+
+looping:
+========
+index: implicit variable 
+has a local scope
+
+FOR index IN lower_bound...upper_bound
+
+LOOP
+
+	stmts
+END LOOP;
+
+
+BEGIN 
+FOR count1 IN 1..10
+LOOP
+ DBMS_OUTPUT.PUT_LINE(count1);
+END LOOP;
+END;
+-- can we use count?
+
+DECLARE 
+lstep PLS_INTEGER:=2;
+
+BEGIN 
+FOR count1 IN 1..10
+LOOP
+ DBMS_OUTPUT.PUT_LINE(lstep||' * '||count1||' = ' || (count1*lstep));
+END LOOP;
+END;
+-- can we use count?
+
+DECLARE 
+lstep PLS_INTEGER:=10;
+
+BEGIN 
+	FOR count1 IN 1..10
+	LOOP
+ 		DBMS_OUTPUT.PUT_LINE(count1));
+	END LOOP;
+DBMS_OUTPUT.PUT_LINE(count1);
+END;
+-- can we use count?
+<<outer>>
+DECLARE 
+lstep PLS_INTEGER:=10;
+count1 number:=20;
+BEGIN 
+	FOR count1 IN 1..lstep
+	LOOP
+ 		DBMS_OUTPUT.PUT_LINE(outer.count1);
+	END LOOP;
+
+DBMS_OUTPUT.PUT_LINE(count1);
+END;
+
+<<outer>>
+DECLARE 
+lstep PLS_INTEGER:=10;
+count1 number:=20;
+BEGIN 
+	FOR count1 IN REVERSE 1..lstep
+	LOOP
+ 		DBMS_OUTPUT.PUT_LINE(count1);
+	END LOOP;
+
+DBMS_OUTPUT.PUT_LINE(count1);
+END;
+
+
+ROWTYPE:
+
+--complete row into plsql
+
+
+DECLARE 
+
+emp_info EMPLOYEES%ROWTYPE;
+
+BEGIN
+select * INTO emp_info
+from employees 
+where employee_id=101;
+
+
+DBMS_OUTPUT.PUT_LINE(emp_info.FIRST_NAME || ' emp id is '|| emp_info.employee_id);
+END;
+
+
+ERROR => not enough values the INTO list...?
+ERROR => too many values the INTO list...?
+ERROR => numeric or value...?
+
+RECORD:
+
+	composite data structure hold different value/datatypes.
+
+3 types:
+
+	1. table based
+	2. cusrsor based
+	3. prgmr defined
+
+Table based record:at runtime
+
+DECLARE
+emp_info EMPLOYEES%ROWTYPE;
+
+cusrsor based record: at runtime
+
+ CURSOR cemp IS 
+ SELECT name,pass from emp;
+
+ r_cur cemp%ROWTYPE;
+
+user DEFINED:
+==============
+TYPE rec_type is RECORD(
+ var_name DATEType [[NOTNULL]:= | DEFAULT def_val],
+  tdy DATETIME [[NOTNULL]:= | DEFAULT def_val],
+  ....
+);
+
+to assign or use in PLSQL block
+
+record_name rec_type;
+
+
+ex:
+
+DECLARE 
+
+TYPE rec_emp_type IS
+RECORD(
+  emp_name EMPLOYEES.first_name%TYPE,
+  last_name EMPLOYEES.last_name%TYPE);
+
+r_emp rec_emp_type;
+
+BEGIN
+   SELECT first_name, last_name INTO
+    r_emp
+  FROM EMPLOYEES WHERE employee_id=101;
+
+DBMS_OUTPUT.PUT_LINE(r_emp.emp_name);	
+END;
+
+
+Cursors :
+
+cursor is a pointer which points on to the set of records or rows or result
+
+2 types:
+
+implicit
+explicit
+
+Implicit cursors:
+
+
+Explicit cursors:
+
+is an select stmt declared explicitly in the declaration block of the cursor
+
+using this so, u hvae the complete control over
+1. OPEN
+2. FETCH
+3. CLOSE
+
+syntax:
+
+CURSOR cur_name IS query;
+
+1st open the cursor
+
+OPEN cur_name;
+FETCH cur_name INTO var_list;
+CLOSE cur_name;
+
+welcome(){
+print('hi');
+print('hello***');
+print('!!!');
+}
+bool isLogged=login();
+if(isLogged)
+welcome()
+else
+welcome()
+
+profile()
+welcome()
+
+inbox()
+welcome()
+
+
+closing a cursor that has not yet opened will throw an error INVALID_CUSRSOR
+
+EXPLICIT CURSOR ATTRIBUTE:
+===========================
+
+4 attributes
+
+cur_name%attribute
+
+1. %ISOPEN -> true if cursor is opened or else false
+2. %FOUND -> 4 values
+		1. NULL
+		2. TRUE
+		3. FALSE
+		4. INVALID_CURSOR
+3. %NOTFOUND -> NULL
+		FALSE ,TRUE,INVALID CURSOR
+	
+4. %ROWCOUNT -> now of rows fetched from cursor, 
+		INVALID CURSOR if cursor not yet opened
+	
+
+
+example:
+
+DECLARE 
+sal number:=9000;
+
+--cursor
+CURSOR emp_cur IS 
+SELECT * FROM EMPLOYEES where salary<10000;
+
+--record
+
+rec_emp emp_cur%ROWTYPE;
+
+BEGIN
+ 
+ SELECT SALARY INTO sal
+	from employees where employee_id=100;
+ OPEN emp_cur;
+
+ LOOP
+	FETCH emp_cur into rec_emp;
+  DBMS_OUTPUT.PUT_LINE(rec_emp.first_name);
+  EXIT WHEN emp_cur%NOTFOUND;
+  END LOOP;
+
+CLOSE emp_cur;
+	
+
+END;
+
+
+get sal from emp  multiply by 15 and update the table 
+use cursor
+
+declare 
+  cursor c1 IS
+   select salary from employees where employee_id=102;
+
+  v_sal number;
+
+  begin
+   
+   open c1;
+    loop
+     fetch c1 into v_sal;
+     update employees set salary=v_sal-10000 where employee_id=102;
+     exit when c1%notfound;
+    end loop;
+  close c1;
+  end;
+
+cursors with parameter:
+
+CURSOR cur_name(param_list)
+IS 
+cursor_qry
+
+
+OPEN cur_name(value)
+
+
+declare 
+  eid number:=102;	
+  cursor c1(n number) IS
+   select salary from employees where employee_id=n;
+
+  v_sal number;
+
+  begin
+   
+   open c1(eid);
+    loop
+     fetch c1 into v_sal;
+   --  update employees set salary=v_sal-10000 where employee_id=102;
+    DBMS_OUTPUT.PUT_LINE(v_sal);
+     exit when c1%notfound;
+    end loop;
+  close c1;
+  end;
+
+CURSOR cur_name(
+pName datatype :=def_value,
+pName datatype :=def_value,
+::::
+) IS cur_qry
+
+declare 
+	
+  cursor c1(n number:=104) IS
+   select salary from employees where employee_id=n;
+
+  v_sal number;
+
+  begin
+   
+   open c1;
+    loop
+     fetch c1 into v_sal;
+   --  update employees set salary=v_sal-10000 where employee_id=102;
+    DBMS_OUTPUT.PUT_LINE(v_sal);
+     exit when c1%notfound;
+    end loop;
+  close c1;
+  end;
+
+procedures:
+===========
+
+PLSQL proc header:
+===================
+create [or replace] procedure proc_name(param_list) 
+IS
+plsql blocks
+
+param list -> IN,OUT or INOUT mode
+
+
+CREATE OR REPLACE PROCEDURE print_emp_details(in_emp_id number)
+IS
+ r_emp employees%ROWTYPE;
+BEGIN
+
+	SELECT * 
+	INTO r_emp
+	from employees where employee_id:=in_emp_id;
+ DBMS_OUTPUT.PUT_LINE(r_emp.first_name);
+EXCEPTION 
+WHEN OTHERS THEN
+ DBMS_OUTPUT.PUT_LINE('exception');
+
+END;
+
+TRIGGERS, FUNCTIONS and implicit cursors
